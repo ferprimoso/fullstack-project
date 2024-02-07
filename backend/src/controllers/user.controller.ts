@@ -9,7 +9,7 @@ export const userController = {
     res.status(status).json(message)
   }),
 
-  login: asyncHandler(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  login: asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body
     const { status, message } = await userService.login(email as string, password as string)
     res.status(status).json(message)

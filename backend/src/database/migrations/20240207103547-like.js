@@ -4,8 +4,8 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     'use strict'
-    await queryInterface.createTable('like', {
-      like_id: {
+    await queryInterface.createTable('liked', {
+      liked_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -31,16 +31,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      track_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'track',
-          key: 'track_id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-      },
       artist_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -55,6 +45,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('like')
+    await queryInterface.dropTable('liked')
   },
 }
