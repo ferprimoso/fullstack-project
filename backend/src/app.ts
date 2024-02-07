@@ -1,8 +1,8 @@
-import express from 'express'
+import express, { type NextFunction, type Request, type Response } from 'express'
 import cors from 'cors'
 import compression from 'compression'
-import logger from './util/logger'
-// import router from './router'
+// import logger from './util/logger'
+import router from './routes'
 import helmet from 'helmet'
 
 // Create Express Server
@@ -17,16 +17,11 @@ app.use(helmet())
 app.use(cors())
 
 // Routes
-// app.use('/api', router)
-
-app.use('/', (req, res) => res.send('HIHIHIH'))
+app.use(router)
 
 // Error handler
-app.use((req, res, next) => {
-  const error = new Error(' not found')
-  logger.error(error)
-
-  return res.status(404).json({ message: error.message })
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  return res.status(500).json({ message: err.message })
 })
 
 export default app
