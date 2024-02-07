@@ -21,7 +21,7 @@ Like.init(
       type: sequelize.INTEGER,
     },
     userId: {
-      type: sequelize.INTEGER,
+      type: sequelize.UUID,
       allowNull: false,
       references: {
         model: 'user',

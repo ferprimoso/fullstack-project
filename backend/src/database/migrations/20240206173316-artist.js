@@ -14,9 +14,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      bio: {
-        type: Sequelize.TEXT,
-      },
       artist_cover_url: {
         type: Sequelize.STRING,
       },
