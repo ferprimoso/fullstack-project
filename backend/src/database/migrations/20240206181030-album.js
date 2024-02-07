@@ -14,8 +14,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      release_date: {
-        type: Sequelize.DATEONLY,
+      release_year: {
+        type: Sequelize.INTEGER,
       },
       artist_id: {
         type: Sequelize.INTEGER,

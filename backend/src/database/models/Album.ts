@@ -6,7 +6,7 @@ import Genre from './Genre'
 class Album extends Model {
   declare albumId: number
   declare albumTitle: string
-  declare releaseDate: Date
+  declare releaseYear: Date
   declare albumCoverUrl: string
   declare artistId: number
   declare genreId: number
@@ -24,8 +24,8 @@ Album.init(
       type: sequelize.STRING,
       allowNull: false,
     },
-    releaseDate: {
-      type: sequelize.DATEONLY,
+    releaseYear: {
+      type: sequelize.INTEGER,
     },
     artistId: {
       type: sequelize.INTEGER,
@@ -59,10 +59,12 @@ Album.init(
 
 Album.belongsTo(Artist, {
   foreignKey: 'artistId',
+  as: 'artist',
 })
 
 Album.belongsTo(Genre, {
   foreignKey: 'genreId',
+  as: 'genre',
 })
 
 export default Album
