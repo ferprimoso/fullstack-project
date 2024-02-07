@@ -3,7 +3,7 @@ import { userController } from '../controllers/user.controller'
 
 const userRouter = Router()
 
-userRouter.post('/signup', userController.sign)
+userRouter.post('/user', userController.create)
 userRouter.post('/login', userController.login)
 
 export default userRouter
