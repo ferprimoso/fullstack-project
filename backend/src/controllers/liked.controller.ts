@@ -22,8 +22,6 @@ export const likedController = {
   getAllAlbumsLiked: asyncHandler(async (req: RequestWithUser, res: Response, next: NextFunction) => {
     const userId = req.user?.userId
 
-    console.log(req.user)
-
     const { status, message } = await likedService.getAllAlbumsLiked(userId?.toString())
     res.status(status).json(message)
   }),

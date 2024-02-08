@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 import Artist from '../database/models/Artist'
-import { resp } from '../util/resp'
+import { resp, respM } from '../util/resp'
 
 export const artistService = {
   getAllArtists: async () => {
@@ -9,7 +9,12 @@ export const artistService = {
   },
 
   getArtistById: async (artistId: string | undefined) => {
-    const artist = await Artist.findByPk(Number(artistId))
+    const artist = await Artist.findByPk(artistId)
+
+    if (artist === null) {
+      return respM(404, 'Not found')
+    }
+
     return resp(200, artist)
   },
 

@@ -1,6 +1,6 @@
 import { Op } from 'sequelize'
 import Album from '../database/models/Album'
-import { resp } from '../util/resp'
+import { resp, respM } from '../util/resp'
 import Artist from '../database/models/Artist'
 import Genre from '../database/models/Genre'
 
@@ -16,7 +16,12 @@ export const albumService = {
   },
 
   getAlbumsById: async (albumId: string | undefined) => {
-    const album = await Album.findByPk(Number(albumId))
+    const album = await Album.findByPk(albumId)
+
+    if (album === null) {
+      return respM(404, 'Not found')
+    }
+
     return resp(200, album)
   },
 
