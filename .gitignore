@@ -2,4 +2,6 @@ node_modules
 dist
 .env
 debug.log
-todo
+todo.txt
+.db/data/
+.db/data-test/

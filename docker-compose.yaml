@@ -10,12 +10,14 @@ services:
       DB_PASS: password
       DB_NAME: musicDb
       DB_HOST: db
+      DB_TEST_HOST: db-test
       JWT_SECRET: s3cres3cret
     volumes:
       - ./backend:/music-api
     restart: always
     depends_on:
       - db
+      - db-test
   db:
     image: mysql
     container_name: mysql-container
@@ -23,4 +25,14 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: password
-    restart: always
+    volumes:
+      - .db/data/mysql:/var/lib/mysql
+  db-test:
+    image: mysql
+    container_name: mysql-test-container
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - .db/data-test/mysql:/var/lib/mysql
+    ports:
+      - 3307:3306
