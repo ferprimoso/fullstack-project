@@ -16,7 +16,7 @@ const userPayload = {
 }
 
 // Tests
-describe('Track', () => {
+describe('User', () => {
   afterAll(async () => {
     await User.destroy({
       where: {

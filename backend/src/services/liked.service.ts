@@ -1,7 +1,7 @@
 import { Op } from 'sequelize'
 import Album from '../database/models/Album'
 import Artist from '../database/models/Artist'
-import Liked from '../database/models/Like'
+import Liked from '../database/models/Liked'
 import { resp, respM } from '../util/resp'
 
 export const likedService = {
@@ -11,6 +11,13 @@ export const likedService = {
     // REFACTOR TO BE MORE SHORT
 
     if (entityType === 'albums') {
+      // Check if entityId exists in Albumstable
+      const album = await Album.findByPk(entityId)
+
+      if (album === null) {
+        return respM(404, 'Album not found')
+      }
+
       // See if album is already liked
       existingLiked = await Liked.findOne({
         where: {
@@ -19,6 +26,13 @@ export const likedService = {
         },
       })
     } else if (entityType === 'artists') {
+      // Check if entityId exists in Artist table
+      const artist = await Artist.findByPk(entityId)
+
+      if (artist === null) {
+        return respM(404, 'Artist not found')
+      }
+
       // See if artist is already liked
       existingLiked = await Liked.findOne({
         where: {
@@ -31,7 +45,8 @@ export const likedService = {
 
     // If the user already has liked, remove the like
     if (existingLiked !== null) {
-      await Liked.destroy({ where: { likeId: existingLiked.likedId } })
+      await Liked.destroy({ where: { likedId: existingLiked.likedId } })
+
       return respM(200, 'Like removed sucessfully')
     }
 
@@ -43,7 +58,7 @@ export const likedService = {
       const liked = await Liked.create({ userId, albumId: null, artistId: entityId })
       return resp(200, liked)
     } else {
-      return respM(400, 'Invalid entityType')
+      return respM(400, 'EntityId not found')
     }
   },
 

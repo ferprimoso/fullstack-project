@@ -7,7 +7,7 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
     "build": "tsc",
-    "start": "node dist/server.js",
+    "run-prod": "NODE_ENV=production tsc && node ./build/src/server.js",
     "dev": "nodemon",
     "test": "NODE_ENV=test jest --runInBand",
     "watch-test": "npm run test -- --watchAll",

@@ -3,7 +3,6 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    'use strict'
     await queryInterface.createTable('liked', {
       liked_id: {
         allowNull: false,
