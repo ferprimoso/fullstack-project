@@ -26,14 +26,12 @@ export const userService = {
       },
     })
 
-    // If user dont exists return null
     if (user == null) {
       return respM(404, 'User not found')
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password)
 
-    // If password dont match return null
     if (!passwordMatch) {
       return respM(401, 'Invalid username or password')
     }
