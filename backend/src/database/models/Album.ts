@@ -6,7 +6,7 @@ import Genre from './Genre'
 class Album extends Model {
   declare albumId: number
   declare albumTitle: string
-  declare releaseYear: Date
+  declare releaseYear: number
   declare albumCoverUrl: string
   declare artistId: number
   declare genreId: number

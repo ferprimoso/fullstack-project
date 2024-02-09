@@ -3,6 +3,7 @@ import { Figtree } from 'next/font/google'
 import './globals.css'
 import Sidebar from '@/components/SideBar'
 import BottomNavigation from '@/components/BottomNavigation'
+// import AuthProvider from '@/context/AuthContext'
 
 const font = Figtree({ subsets: ['latin'] })
 
