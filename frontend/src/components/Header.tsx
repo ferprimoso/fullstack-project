@@ -32,6 +32,7 @@ const Header = ({ children, className }: HeaderProps) => {
           <button
             className="rounded-full bg-black flex items-center justify-center opacity-90"
             onClick={() => router.forward()}
+            disabled={!router.asPath}
           >
             <RxCaretRight size={35} className="text-white" />
           </button>

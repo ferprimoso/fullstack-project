@@ -2,7 +2,7 @@ import getAlbums from '@/actions/getAlbums'
 import Header from '@/components/Header'
 import PageContent from '@/components/PageContent'
 
-export const revalidate = 30 // revalidate at most every hour
+export const revalidate = 0 // revalidate at most every hour
 
 export default async function Home() {
   const albums = await getAlbums()
@@ -20,13 +20,13 @@ export default async function Home() {
         <div className="flex justify-between items-center">
           <h1 className="text-white text-2xl font-semibold">Albums</h1>
         </div>
-        <PageContent albums={albums} />
+        <PageContent items={albums} />
       </div>
       <div className="mt-2 mb-7 px-6">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-2xl font-semibold">Artists</h1>
         </div>
-        <div>list of artists</div>
+        <PageContent items={albums} />
       </div>
     </div>
   )

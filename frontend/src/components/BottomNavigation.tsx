@@ -1,6 +1,7 @@
 import { HiHome } from 'react-icons/hi'
 import { BiSearch } from 'react-icons/bi'
 import { TbPlaylist } from 'react-icons/tb'
+import Link from 'next/link'
 
 const BottomNavigation = () => {
   return (
@@ -10,18 +11,24 @@ const BottomNavigation = () => {
     >
       <div className="z-10">
         <div className="flex h-20 justify-around items-center ">
-          <button className="flex flex-col items-center gap-1 flex-1">
+          <Link className="flex flex-col items-center gap-1 flex-1" href="/">
             <HiHome size={24} />
             <span className="text-xs">Início</span>
-          </button>
-          <button className="flex flex-col items-center gap-1 flex-1">
+          </Link>
+          <Link
+            className="flex flex-col items-center gap-1 flex-1"
+            href="/search"
+          >
             <BiSearch size={24} />
             <span className="text-xs">Buscar</span>
-          </button>
-          <button className="flex flex-col items-center gap-1 flex-1">
+          </Link>
+          <Link
+            className="flex flex-col items-center gap-1 flex-1"
+            href="/library"
+          >
             <TbPlaylist size={24} />
             <span className="text-xs">Sua Biblioteca</span>
-          </button>
+          </Link>
         </div>
       </div>
     </div>

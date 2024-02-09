@@ -2,16 +2,18 @@
 import Image from 'next/image'
 import { Album } from '@/types'
 import PlayButton from './PlayButton'
+import { useRouter } from 'next/navigation'
 
 interface AlbumCardProps {
   data: Album
-  onClick: (id: number) => void
 }
 
-const AlbumCard: React.FC<AlbumCardProps> = ({ data, onClick }) => {
+const AlbumCard: React.FC<AlbumCardProps> = ({ data }) => {
+  const router = useRouter()
+
   return (
     <div
-      onClick={() => onClick(data.albumId)}
+      onClick={() => router.push('/album/' + data.albumId)}
       className="relative group flex flex-col items-center justify-center rounded-md overflow-hidden gap-x-4 bg-neutral-400/5 cursor-pointer hover:bg-neutral-400/10 transition p-3"
     >
       <div className="relative aspect-square w-full h-full rounded-md overflow-hidden">

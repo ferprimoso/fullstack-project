@@ -1,16 +1,23 @@
 export interface Artist {
-  artistId: number
+  artistId: string
   artistName: string
   artistCoverUrl: string
 }
 
+export interface Track {
+  trackId: string
+  trackTitle: string
+  trackDuration: string
+  albumId: string
+}
+
 export interface Album {
-  albumId: number
+  albumId: string
   albumTitle: string
   releaseYear: number
   albumCoverUrl: string
   artist: Artist
-  genreId: number
+  genreId: string
 }
 
 export interface RegisterIn {
