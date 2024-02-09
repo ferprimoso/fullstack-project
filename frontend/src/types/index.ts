@@ -1,9 +1,15 @@
+export interface Artist {
+  artistId: number
+  artistName: string
+  artistCoverUrl: string
+}
+
 export interface Album {
   albumId: number
   albumTitle: string
   releaseYear: number
   albumCoverUrl: string
-  artistId: number
+  artist: Artist
   genreId: number
 }
 
