@@ -68,20 +68,21 @@ describe('Liked', () => {
 
       expect(response.status).toBe(200)
     })
+
+    it('Should return a 400 if entityType is not artists or albums', async () => {
+      // All the DB Data was seeded when the Db was created so we can assume theres a 2 albumId in the database
+      const response = await supertest(app).post('/likes/something/2').set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(400)
+    })
+
+    it('Should return a 404 if entityId is not found', async () => {
+      const response = await supertest(app).post('/likes/albums/invalidId').set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(404)
+    })
   })
 
-  it('Should return a 400 if entityType is not artists or albums', async () => {
-    // All the DB Data was seeded when the Db was created so we can assume theres a 2 albumId in the database
-    const response = await supertest(app).post('/likes/something/2').set('Authorization', `Bearer ${token}`)
-
-    expect(response.status).toBe(400)
-  })
-
-  it('Should return a 404 if entityId is not found', async () => {
-    const response = await supertest(app).post('/likes/albums/invalidId').set('Authorization', `Bearer ${token}`)
-
-    expect(response.status).toBe(404)
-  })
   describe('Get all Albums Liked - GET /likes/albums', () => {
     it('Should return a list of all albums Liked', async () => {
       // All the DB Data was seeded when the Db was created so we can assume theres a 4 albumId in the database

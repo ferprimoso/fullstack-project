@@ -14,7 +14,8 @@
     "db-migrate": "npx sequelize db:create && npx sequelize db:migrate",
     "db-seed": "npx sequelize db:seed:all",
     "db-test-migrate": "NODE_ENV=test npm run db-migrate",
-    "db-test-seed": "NODE_ENV=test npm run db-seed"
+    "db-test-seed": "NODE_ENV=test npm run db-seed",
+    "db-create": "npm run db-migrate && npm run db-test-migrate && npm run db-seed && npm run db-test-seed"
   },
   "keywords": [],
   "author": "",

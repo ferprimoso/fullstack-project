@@ -1,8 +1,18 @@
 version: '3'
 
 services:
+  frontend:
+    build: ./frontend
+    command: sh -c "npm run dev"
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app-frontend
+    depends_on:
+      - backend
   backend:
     build: ./backend
+    command: sh -c "npm run db-create && npm run dev"
     ports:
       - 3001:3001
     environment:
