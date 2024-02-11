@@ -20,15 +20,9 @@ export interface Album {
   genreId: string
 }
 
-export interface RegisterIn {
-  username: string
-  email: string
-  password: string
-}
-export interface LoginIn {
-  email: string
-  password: string
-}
-export interface AuthInfo {
-  email: string
+export interface Liked {
+  likedId: string
+  userId: string
+  albumId: string
+  artistId: string
 }

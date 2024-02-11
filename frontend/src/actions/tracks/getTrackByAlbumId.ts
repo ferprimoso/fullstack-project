@@ -2,7 +2,7 @@ import { Track } from '@/types'
 
 const getTracksByAlbumId = async (albumId: string): Promise<Track[]> => {
   const res = await fetch(
-    'http://fullstack_project_backend_1:3001/albums/' + albumId + '/tracks/',
+    'http://fullstack_project_backend_1:3001/albums/' + albumId + '/tracks',
   )
 
   if (!res.ok) {
