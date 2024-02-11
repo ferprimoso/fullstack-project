@@ -1,14 +1,18 @@
-import { Album, Artist, Liked } from '@/types'
+/* eslint-disable prettier/prettier */
+'use server'
+import { Liked } from '@/types'
 
 interface createLikedProps {
   entityType: string
   entityId: string
+  token: string | null
 }
 
 const createLiked = async ({
+  token,
   entityType,
   entityId,
-}: createLikedProps): Promise<Liked[]> => {
+}: createLikedProps): Promise<void> => {
   const res = await fetch(
     'http://fullstack_project_backend_1:3001/likes/' +
     entityType +
@@ -16,14 +20,15 @@ const createLiked = async ({
     entityId,
     {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
   )
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
-
-  return res.json()
 }
 
 const getAllAlbumsLiked = async (token: string): Promise<Liked[]> => {
@@ -37,11 +42,8 @@ const getAllAlbumsLiked = async (token: string): Promise<Liked[]> => {
     },
   )
 
-  console.log(res)
-
   if (!res.ok) {
-    console.log(res)
-    throw new Error(res)
+    throw res
   }
 
   return res.json()

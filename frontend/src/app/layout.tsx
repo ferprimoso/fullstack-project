@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Figtree } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '@/providers/AuthContext'
+import BottomNavigation from '@/components/BottomNavigation'
 
 const font = Figtree({ subsets: ['latin'] })
 
@@ -18,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body className={font.className}>{children}</body>
+        <body className={font.className}>
+          {children}
+          <BottomNavigation />
+        </body>
       </AuthProvider>
     </html>
   )

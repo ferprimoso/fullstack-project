@@ -25,4 +25,6 @@ export interface Liked {
   userId: string
   albumId: string
   artistId: string
+  artist: Artist
+  album: Album
 }

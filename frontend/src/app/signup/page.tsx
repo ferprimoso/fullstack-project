@@ -1,19 +1,27 @@
 'use client'
-import { signupUser } from '@/actions/user/userAuth'
 import Button from '@/components/Button'
-import { useState } from 'react'
+import { useAuth } from '@/providers/AuthContext'
+import { redirect } from 'next/navigation'
+import { useState, useEffect } from 'react'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const { user, signup } = useAuth()
+
+  // Redirect to home if user is logged in
+  useEffect(() => {
+    if (user) {
+      redirect('/')
+    }
+  }, [user])
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const token = await signupUser({ email, password })
-      // Store the token securely in an HTTP cookie
-      document.cookie = `token=${token}; path=/`
-      // Redirect the user to a protected route
+      signup(email, password)
+      redirect('/')
     } catch (error) {
       console.error('Signup error:', error)
     }
@@ -21,7 +29,7 @@ export default function SignupPage() {
 
   return (
     <div className="h-full w-full overflow-hidden overflow-y-auto flex justify-center items-center">
-      <div className="flex flex-col h-full md:max-h-[85vh] w-full max-w-xl bg-neutral-900 p-4 md:p-8 rounded-lg">
+      <div className="flex flex-col h-full md:max-h-[60vh]  w-full max-w-xl bg-neutral-900 p-4 md:p-8 rounded-lg">
         <h1 className="text-3xl md:text-6xl my-8 font-bold">
           Inscreva-se no <span className="text-pink-500">Musicfy</span>
         </h1>

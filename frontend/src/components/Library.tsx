@@ -3,15 +3,15 @@
 /* eslint-disable prettier/prettier */
 import { useEffect, useState } from 'react'
 import { TbPlaylist } from 'react-icons/tb'
-import ListItem from './ListItem'
 import { getAllAlbumsLiked, getAllArtistsLiked } from '@/actions/liked/getLikeds'
 import { useAuth } from '@/providers/AuthContext'
 import { Album, Artist, Liked } from '@/types'
+import MediaItem from './MediaItem'
 
 const Library = () => {
   // Tabs state logic
-  const tabs = ['Artist', 'Albums']
-  const [activeTab, setActiveTab] = useState('Artist')
+  const tabs = ['Artistas', 'Albums']
+  const [activeTab, setActiveTab] = useState('Artistas')
 
   // Data Liked states
   const [albumsLiked, setAlbumsLiked] = useState<Liked[] | undefined>()
@@ -26,6 +26,7 @@ const Library = () => {
     const getData = async () => {
       try {
         const token = localStorage.getItem('token')
+        console.log(token)
         // Fetch albums and artist Liked when user is logged in
         const albumsLiked = await getAllAlbumsLiked(token as string)
         const artistsLiked = await getAllArtistsLiked(token as string)
@@ -72,8 +73,8 @@ const Library = () => {
                 key={tab}
                 className={`${activeTab === tab ? 'block' : 'hidden'}`}
               >
-                {tab === 'Albums' && albumsLiked?.map((album) => <pre key={album.albumId}>album.albumId</pre>)}
-                {/* {tab === 'Artists' && artistsLiked?.map((artist) => <ListItem key={artist.artistId} image={artist.artistCoverUrl} name={artist.artistName} />)} */}
+                {tab === 'Albums' && albumsLiked?.map((liked) => <MediaItem key={liked.albumId} data={liked.album as Artist & Album} />)}
+                {tab === 'Artistas' && artistsLiked?.map((liked) => <MediaItem key={liked.artistId} data={liked.artist as Artist & Album} />)}
               </div>
             ))
           }

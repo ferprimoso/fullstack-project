@@ -1,6 +1,5 @@
-import getAlbums from '@/actions/getAlbums'
-import getArtists from '@/actions/getArtists'
-import BottomNavigation from '@/components/BottomNavigation'
+import getAlbums from '@/actions/albums/getAlbums'
+import getArtists from '@/actions/artists/getArtists'
 import Header from '@/components/Header'
 import PageContent from '@/components/PageContent'
 import PageContentArtist from '@/components/PageContentArtist'
@@ -37,7 +36,6 @@ export default async function Home() {
           </div>
         </div>
       </SideBar>
-      <BottomNavigation />
     </>
   )
 }

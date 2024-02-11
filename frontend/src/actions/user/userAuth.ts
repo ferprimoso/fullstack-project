@@ -1,7 +1,7 @@
-'use server' // This make the request being made in serverside not in client
+'use server'
 
 async function loginUser(credentials: { email: string; password: string }) {
-  // Call your login API endpoint
+  // Call login API endpoint
   const response = await fetch(
     'http://fullstack_project_backend_1:3001/login',
     {
@@ -22,7 +22,7 @@ async function loginUser(credentials: { email: string; password: string }) {
 }
 
 async function signupUser(credentials: { email: string; password: string }) {
-  // Call your signup API endpoint
+  // Call signup API endpoint
   const response = await fetch(
     'http://fullstack_project_backend_1:3001/signup',
     {

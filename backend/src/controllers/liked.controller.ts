@@ -15,6 +15,7 @@ export const likedController = {
     const { entityId, entityType } = req.params
     const userId = req.user?.userId
 
+    console.log('wtf2')
     const { status, message } = await likedService.createLike(userId?.toString(), entityId, entityType)
     res.status(status).json(message)
   }),

@@ -13,6 +13,7 @@ type AuthContextType = {
   user: User | null | undefined
   login: (email: string, password: string) => void
   logout: () => void
+  signup: (email: string, password: string) => void
 }
 
 interface UserProviderProps {
@@ -27,8 +28,6 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
-      // Fetch user information using the token and set the user
-      // This is a placeholder, replace it with your actual authentication logic
       const decodedToken = decodeToken(token)
       const user = decodedToken
         ? { userId: decodedToken.userId, username: decodedToken.username }
@@ -39,13 +38,9 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      console.log('hi')
-
       const data = await loginUser({ email, password })
-
       localStorage.setItem('token', data.token)
       setUser({ userId: data.userId, username: data.username })
-      console.log(data)
       redirect('/')
     } catch (error) {
       console.log(error)
@@ -61,8 +56,19 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
     redirect('/')
   }
 
+  const signup = async (email, password) => {
+    try {
+      const data = await signupUser({ email, password })
+      localStorage.setItem('token', data.token)
+      setUser({ userId: data.userId, username: data.username })
+      redirect('/')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, signup }}>
       {children}
     </AuthContext.Provider>
   )

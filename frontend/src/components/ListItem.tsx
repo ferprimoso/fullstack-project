@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { FaPlay } from 'react-icons/fa'
 
 interface ListItemProps {
@@ -10,8 +9,6 @@ interface ListItemProps {
 }
 
 const ListItem: React.FC<ListItemProps> = ({ image, name }) => {
-  const router = useRouter()
-
   const onClick = () => {}
 
   return (
