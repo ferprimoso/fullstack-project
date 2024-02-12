@@ -28,7 +28,7 @@ module.exports = {
           artist_cover_url: 'https://i.scdn.co/image/ab6761610000e5eb6ff0cd5ef2ecf733804984bb',
         },
         {
-          artist_name: 'Blonde',
+          artist_name: 'Frank Ocean',
           artist_cover_url: 'https://i.scdn.co/image/ab6761610000e5ebee3123e593174208f9754fab',
         },
         {

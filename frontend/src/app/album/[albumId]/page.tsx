@@ -1,4 +1,5 @@
 import getAlbumById from '@/actions/albums/getAlbumById'
+import getArtistById from '@/actions/artists/getArtistById'
 import getTracksByAlbumId from '@/actions/tracks/getTrackByAlbumId'
 import Header from '@/components/Header'
 import LikeButton from '@/components/LikeButton'
@@ -8,6 +9,7 @@ import Image from 'next/image'
 
 const AlbumPage = async ({ params }: { params: { albumId: string } }) => {
   const album = await getAlbumById(params.albumId)
+  const artist = await getArtistById(album.artistId)
   const tracks = await getTracksByAlbumId(params.albumId)
 
   return (
@@ -16,7 +18,7 @@ const AlbumPage = async ({ params }: { params: { albumId: string } }) => {
         <Header>
           <div className="mt-10">
             <div className="flex flex-col md:flex-row items-center md:items-end gap-x-5 ">
-              <div className="relative h-32 w-32 lg:h-60 lg:w-60 ">
+              <div className="self-center relative h-32 w-32 lg:h-60 lg:w-60 mb-4 md:mb-0 lg:min-w-60 lg:min-h-60 min-w-32 min-h-32 ">
                 <Image
                   className="object-cover "
                   src={album.albumCoverUrl}
@@ -31,15 +33,17 @@ const AlbumPage = async ({ params }: { params: { albumId: string } }) => {
                   {album.albumTitle}
                 </h1>
                 <p className="hidden md:block font-semibold text-sm">
-                  {album.albumTitle} • {album.releaseYear} • {8} musicas • 12min
-                  40s
+                  {artist.artistName} • {album.releaseYear} • {tracks.length}{' '}
+                  musicas
                 </p>
-                <LikeButton entityType={'albums'} entityId={album.albumId} />
+                <div className="flex justify-center md:justify-start">
+                  <LikeButton entityType={'albums'} entityId={album.albumId} />
+                </div>
               </div>
             </div>
           </div>
         </Header>
-        <TrackList tracks={tracks} />
+        <TrackList tracks={tracks} artistName={artist.artistName} />
       </div>
     </Sidebar>
   )

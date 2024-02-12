@@ -4,6 +4,11 @@ export interface Artist {
   artistCoverUrl: string
 }
 
+export interface Genre {
+  genreId: string
+  genreName: string
+}
+
 export interface Track {
   trackId: string
   trackTitle: string
@@ -17,6 +22,7 @@ export interface Album {
   releaseYear: number
   albumCoverUrl: string
   artist: Artist
+  artistId: string
   genreId: string
 }
 

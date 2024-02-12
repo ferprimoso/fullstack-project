@@ -6,7 +6,7 @@ import PageContent from '@/components/PageContent'
 import Sidebar from '@/components/SideBar'
 import Image from 'next/image'
 
-// get albums
+export const revalidate = 0
 
 const ArtistPage = async ({ params }: { params: { artistId: string } }) => {
   const artist = await getArtistById(params.artistId)
@@ -22,7 +22,7 @@ const ArtistPage = async ({ params }: { params: { artistId: string } }) => {
         <Header>
           <div className="mt-10">
             <div className="flex flex-col md:flex-row items-center md:items-end gap-x-5 ">
-              <div className="relative h-32 w-32 lg:h-60 lg:w-60  ">
+              <div className="relative h-32 w-32 lg:h-60 lg:w-60 mb-4 md:mb-0">
                 <Image
                   className="object-cover rounded-full"
                   src={artist.artistCoverUrl}
@@ -36,7 +36,13 @@ const ArtistPage = async ({ params }: { params: { artistId: string } }) => {
                 <h1 className="text-white text-4xl sm:text-5xl lg:text-7xl font-bold">
                   {artist.artistName}
                 </h1>
-                <LikeButton entityType={'artists'} entityId={artist.artistId} />
+
+                <div className="flex justify-center md:justify-start">
+                  <LikeButton
+                    entityType={'artists'}
+                    entityId={artist.artistId}
+                  />
+                </div>
               </div>
             </div>
           </div>

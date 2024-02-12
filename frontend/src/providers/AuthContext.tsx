@@ -1,7 +1,7 @@
 'use client'
 
 import { loginUser, signupUser } from '@/actions/user/userAuth'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { createContext, useContext, useEffect, useState } from 'react'
 
 type User = {
@@ -13,7 +13,7 @@ type AuthContextType = {
   user: User | null | undefined
   login: (email: string, password: string) => void
   logout: () => void
-  signup: (email: string, password: string) => void
+  signup: (username: string, email: string, password: string) => void
 }
 
 interface UserProviderProps {
@@ -24,6 +24,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null | undefined>()
+
+  const router = useRouter()
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -41,29 +43,26 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
       const data = await loginUser({ email, password })
       localStorage.setItem('token', data.token)
       setUser({ userId: data.userId, username: data.username })
-      redirect('/')
+      router.push('/')
     } catch (error) {
       console.log(error)
     }
   }
 
   const logout = () => {
-    // Remove the token from localStorage
+    // Remove JWT, User and redirect to Homepage
     localStorage.removeItem('token')
-    // Clear the user
     setUser(null)
-    // Redirect to login page after logout
-    redirect('/')
+    router.push('/')
   }
 
-  const signup = async (email, password) => {
+  const signup = async (username, email, password) => {
     try {
-      const data = await signupUser({ email, password })
-      localStorage.setItem('token', data.token)
-      setUser({ userId: data.userId, username: data.username })
-      redirect('/')
+      await signupUser({ username, email, password })
     } catch (error) {
       console.log(error)
+    } finally {
+      login(email, password)
     }
   }
 

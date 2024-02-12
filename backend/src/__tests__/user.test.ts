@@ -28,12 +28,12 @@ describe('User', () => {
 
   describe('Register User - POST /user', () => {
     it('Should fail to create a user with missing signup data', async () => {
-      const response = await supertest(app).post('/user')
+      const response = await supertest(app).post('/signup')
       expect(response.status).toBe(422)
     })
 
     it('Should create a sucessefully create a user if the signup data is valid', async () => {
-      const response = await supertest(app).post('/user').send(userPayload)
+      const response = await supertest(app).post('/signup').send(userPayload)
 
       expect(response.status).toBe(201)
       expect(response.body.username).toBe('john')

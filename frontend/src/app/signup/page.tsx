@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 
 export default function SignupPage() {
   const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   const { user, signup } = useAuth()
@@ -20,8 +21,7 @@ export default function SignupPage() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      signup(email, password)
-      redirect('/')
+      signup(username, email, password)
     } catch (error) {
       console.error('Signup error:', error)
     }
@@ -29,11 +29,24 @@ export default function SignupPage() {
 
   return (
     <div className="h-full w-full overflow-hidden overflow-y-auto flex justify-center items-center">
-      <div className="flex flex-col h-full md:max-h-[60vh]  w-full max-w-xl bg-neutral-900 p-4 md:p-8 rounded-lg">
+      <div className="flex flex-col h-full md:max-h-[85vh]  w-full max-w-xl bg-neutral-900 p-4 md:p-8 rounded-lg">
         <h1 className="text-3xl md:text-6xl my-8 font-bold">
           Inscreva-se no <span className="text-pink-500">Musicfy</span>
         </h1>
         <form onSubmit={handleSignup}>
+          <div className="flex flex-col mb-4">
+            <label htmlFor="text" className="text-2xl mb-2 textsemibold">
+              Username
+            </label>
+            <input
+              className="p-2"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="username"
+              required
+            />
+          </div>
           <div className="flex flex-col mb-4">
             <label htmlFor="text" className="text-2xl mb-2 textsemibold">
               Email

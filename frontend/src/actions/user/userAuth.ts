@@ -21,7 +21,11 @@ async function loginUser(credentials: { email: string; password: string }) {
   return data
 }
 
-async function signupUser(credentials: { email: string; password: string }) {
+async function signupUser(credentials: {
+  username: string
+  email: string
+  password: string
+}) {
   // Call signup API endpoint
   const response = await fetch(
     'http://fullstack_project_backend_1:3001/signup',

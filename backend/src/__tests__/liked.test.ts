@@ -17,7 +17,7 @@ describe('Liked', () => {
   // It will be created a mock user to get the JWT TOKEN and Userid
   beforeAll(async () => {
     // Create a Mock User
-    await supertest(app).post('/user').send(userPayload)
+    await supertest(app).post('/signup').send(userPayload)
     const response = await supertest(app).post('/login').send(userPayload)
     token = response.body.token
   })

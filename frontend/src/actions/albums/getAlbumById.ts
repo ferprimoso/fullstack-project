@@ -1,6 +1,8 @@
 import { Album } from '@/types'
 
 const getAlbumById = async (albumId: string): Promise<Album> => {
+  console.log('hi', albumId)
+
   const res = await fetch(
     'http://fullstack_project_backend_1:3001/albums/' + albumId,
   )
