@@ -39,10 +39,16 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [])
 
   const login = async (email: string, password: string) => {
-    const data = await loginUser({ email, password })
-    localStorage.setItem('token', data.token)
-    setUser({ userId: data.userId, username: data.username })
-    router.push('/')
+    try {
+      const data = await loginUser({ email, password })
+      localStorage.setItem('token', data.token)
+      setUser({ userId: data.userId, username: data.username })
+      router.push('/')
+    } catch (error) {
+      throw new Error('Login failed') // Throw an error to propagate it
+      // Or you can return a rejected promise
+      // return Promise.reject(new Error('Login failed'));
+    }
   }
 
   const logout = () => {

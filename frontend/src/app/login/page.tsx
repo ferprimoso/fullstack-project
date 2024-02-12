@@ -2,26 +2,21 @@
 import Button from '@/components/Button'
 import { useAuth } from '@/providers/AuthContext'
 import { redirect } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { FieldValues, useForm } from 'react-hook-form'
 
 // Validation function to check if the email is in a valid format
 const validateEmail = (email: string) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
-// Validation function to check if the password meets certain criteria (e.g., minimum length)
-const validatePassword = (password: string) => {
-  return password.length >= 6 // Example: Password should be at least 6 characters long
-}
-
 export default function LoginPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
-  // Errors States
-  const [emailError, setEmailError] = useState('')
-  const [passwordError, setPasswordError] = useState('')
-  const [loginError, setLoginError] = useState('')
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm()
+  const [loginError, setLoginError] = useState<string | null>(null)
 
   const { user, login } = useAuth()
 
@@ -32,31 +27,11 @@ export default function LoginPage() {
     }
   }, [user])
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoginError('')
-
-    // Validate email
-    if (!validateEmail(email)) {
-      setEmailError('Endereço de email invalido')
-      return
-    }
-
-    setEmailError('')
-
-    // Validate password
-    if (!validatePassword(password)) {
-      setPasswordError('Sua senha precisa ter 6 caracteres')
-      return
-    }
-
-    setPasswordError('')
-
+  const onSubmit = async (data: FieldValues) => {
     try {
-      login(email, password)
+      await login(data.email, data.password)
     } catch (error) {
-      setLoginError('Email ou senha invalidos')
-      console.error('Login error')
+      setLoginError('Usuário ou senha invalido')
     }
   }
 
@@ -66,36 +41,48 @@ export default function LoginPage() {
         <h1 className="text-3xl md:text-6xl my-8 font-bold">
           Entrar no <span className="text-pink-500">Musicfy</span>
         </h1>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col mb-4">
             <label htmlFor="text" className="text-2xl mb-2 textsemibold">
               Email
             </label>
             <input
+              {...register('email', {
+                required: 'Por favor insira o email',
+                validate: (email) => validateEmail(email) || 'Email invalido',
+              })}
               className="p-2"
               type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               placeholder="email"
-              required
             />
-            {emailError && <p className="text-red-500">{emailError}</p>}
+            {errors.email && (
+              <p className="text-red-500">{errors.email.message as string}</p>
+            )}{' '}
           </div>
           <div className="flex flex-col mb-8">
             <label htmlFor="password" className="text-2xl mb-2 textsemibold">
               Senha
             </label>
             <input
+              {...register('password', {
+                required: 'Por favor insira a senha',
+                minLength: {
+                  value: 6,
+                  message: 'Senha precisar ter mais que 6 caracteres',
+                },
+              })}
               className="p-2"
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               placeholder="senha"
-              required
             />
-            {passwordError && <p className="text-red-500">{passwordError}</p>}
+            {errors.password && (
+              <p className="text-red-500">
+                {errors.password.message as string}
+              </p>
+            )}
           </div>
           <Button
+            disabled={isSubmitting}
             className="bg-pink-500 text-white py-4 mb-4 hover:scale-100 hover:opacity-50"
             type="submit"
           >
