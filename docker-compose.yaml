@@ -10,6 +10,8 @@ services:
       - ./frontend:/app-frontend
     depends_on:
       - backend
+    environment:
+      NEXT_PUBLIC_NETWORK_API_URL: http://fullstack_project_backend_1:3001/
   backend:
     build: ./backend
     command: sh -c "npm run db-create && npm run dev"

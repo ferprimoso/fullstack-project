@@ -1,7 +1,8 @@
 import { Album } from '@/types'
+import apiKey from '../api'
 
 const getAlbums = async (): Promise<Album[]> => {
-  const res = await fetch('http://fullstack_project_backend_1:3001/albums')
+  const res = await fetch(apiKey + '/albums')
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')

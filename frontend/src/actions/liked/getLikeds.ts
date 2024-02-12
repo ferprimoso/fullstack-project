@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 'use server'
 import { Liked } from '@/types'
+import apiKey from '../api'
 
 interface createLikedProps {
   entityType: string
@@ -14,7 +15,7 @@ const createLikedApi = async ({
   entityId,
 }: createLikedProps): Promise<void> => {
   const res = await fetch(
-    'http://fullstack_project_backend_1:3001/likes/' +
+    apiKey + '/likes/' +
     entityType +
     '/' +
     entityId,
@@ -33,7 +34,7 @@ const createLikedApi = async ({
 
 const getAllAlbumsLiked = async (token: string): Promise<Liked[]> => {
   const res = await fetch(
-    'http://fullstack_project_backend_1:3001/likes/albums',
+    apiKey + '/likes/albums',
     {
       method: 'GET',
       headers: {
@@ -51,7 +52,7 @@ const getAllAlbumsLiked = async (token: string): Promise<Liked[]> => {
 
 const getAllArtistsLiked = async (token: string): Promise<Liked[]> => {
   const res = await fetch(
-    'http://fullstack_project_backend_1:3001/likes/artists',
+    apiKey + '/likes/artists',
     {
       method: 'GET',
       headers: {

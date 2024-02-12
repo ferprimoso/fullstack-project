@@ -1,11 +1,10 @@
 'use server'
 
 import { Album, Artist } from '@/types'
+import apiKey from '../api'
 
 const searchByAlbumName = async (name: string): Promise<Album[]> => {
-  const res = await fetch(
-    'http://fullstack_project_backend_1:3001/albums/search?name=' + name,
-  )
+  const res = await fetch(apiKey + '/albums/search?name=' + name)
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
@@ -13,9 +12,7 @@ const searchByAlbumName = async (name: string): Promise<Album[]> => {
   return res.json()
 }
 const searchByArtistName = async (name: string): Promise<Artist[]> => {
-  const res = await fetch(
-    'http://fullstack_project_backend_1:3001/artists/search?name=' + name,
-  )
+  const res = await fetch(apiKey + '/artists/search?name=' + name)
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')

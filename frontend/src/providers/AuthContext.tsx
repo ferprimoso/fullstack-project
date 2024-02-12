@@ -4,11 +4,13 @@ import { loginUser, signupUser } from '@/actions/user/userAuth'
 import { useRouter } from 'next/navigation'
 import { createContext, useContext, useEffect, useState } from 'react'
 
+// Type for User Input
 type User = {
   userId: string
   username: string
 }
 
+// Type for the AuthContext
 type AuthContextType = {
   user: User | null | undefined
   login: (email: string, password: string) => void
@@ -38,6 +40,7 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   }, [])
 
+  // Login method
   const login = async (email: string, password: string) => {
     try {
       const data = await loginUser({ email, password })
@@ -45,12 +48,11 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
       setUser({ userId: data.userId, username: data.username })
       router.push('/')
     } catch (error) {
-      throw new Error('Login failed') // Throw an error to propagate it
-      // Or you can return a rejected promise
-      // return Promise.reject(new Error('Login failed'));
+      throw new Error('Login failed')
     }
   }
 
+  // Logout method
   const logout = () => {
     // Remove JWT, User and redirect to Homepage
     localStorage.removeItem('token')
@@ -58,11 +60,12 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
     router.push('/')
   }
 
+  // Signup method
   const signup = async (username: string, email: string, password: string) => {
     try {
       await signupUser({ username, email, password })
     } catch (error) {
-      console.log(error)
+      throw new Error('Login failed')
     } finally {
       login(email, password)
     }
@@ -75,6 +78,7 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
   )
 }
 
+// export auth context
 export const useAuth = () => {
   const context = useContext(AuthContext)
   if (context === undefined) {
@@ -83,8 +87,8 @@ export const useAuth = () => {
   return context
 }
 
+// Util to decode JWT
 const decodeToken = (token: string) => {
-  // Decode the JWT token
   try {
     const decodedToken = JSON.parse(atob(token.split('.')[1]))
     return decodedToken

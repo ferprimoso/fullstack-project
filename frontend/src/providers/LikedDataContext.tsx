@@ -17,6 +17,7 @@ type LikedContextType = {
   artistsLiked: Liked[] | undefined
   setArtistsLiked: React.Dispatch<React.SetStateAction<Liked[] | undefined>>
   createLiked: (token: string, entityId: string, entitytype: string) => void
+  updateData: () => void
 }
 
 // Children Props
@@ -30,6 +31,7 @@ const LikedDataContext = createContext<LikedContextType>({
   artistsLiked: undefined,
   setArtistsLiked: () => {},
   createLiked: () => {},
+  updateData: () => {},
 })
 
 // Hook
@@ -42,7 +44,7 @@ export const LikedDataProvider: React.FC<LikedDataProps> = ({ children }) => {
 
   useEffect(() => {
     fetchData() // Call the fetchData function when the component mounts
-  }, []) // Empty dependency array to ensure the effect runs only once on mount
+  }, [])
 
   const fetchData = async () => {
     try {
@@ -59,10 +61,10 @@ export const LikedDataProvider: React.FC<LikedDataProps> = ({ children }) => {
       setArtistsLiked(artistsLiked)
     } catch (error) {
       console.error('Error fetching liked data:', error)
-      // You can handle errors here, for example, set state to undefined or show an error message.
     }
   }
 
+  // Create a liked instance then fetch the data
   const createLiked = async (
     token: string,
     entityType: string,
@@ -76,6 +78,11 @@ export const LikedDataProvider: React.FC<LikedDataProps> = ({ children }) => {
     }
   }
 
+  // Update Data
+  const updateData = async () => {
+    fetchData()
+  }
+
   return (
     <LikedDataContext.Provider
       value={{
@@ -84,6 +91,7 @@ export const LikedDataProvider: React.FC<LikedDataProps> = ({ children }) => {
         artistsLiked,
         setArtistsLiked,
         createLiked,
+        updateData,
       }}
     >
       {children}

@@ -4,10 +4,10 @@ import getTracksByAlbumId from '@/actions/tracks/getTrackByAlbumId'
 import Header from '@/components/Header'
 import LikeButton from '@/components/LikeButton'
 import Sidebar from '@/components/SideBar'
-import TrackList from '@/components/TrackList'
+import TrackList from './components/TrackList'
 import Image from 'next/image'
 
-export const revalidate = 0
+export const revalidate = 40
 
 const AlbumPage = async ({ params }: { params: { albumId: string } }) => {
   const album = await getAlbumById(params.albumId)

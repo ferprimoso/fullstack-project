@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    command: sh -c "npm run db-migrate && npm run build && npm run start"
+    ports:
+      - 3001:3001
+    environment:
+      DB_USER: root
+      DB_PASS: password
+      DB_NAME: musicDb
+      DB_HOST: db
+      DB_TEST_HOST: db-test
+      JWT_SECRET: s3cres3cret
+    volumes:
+      - ./backend:/music-api
+    restart: always
+    depends_on:
+      - db
+  db:
+    image: mysql
+    container_name: mysql-container
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: password

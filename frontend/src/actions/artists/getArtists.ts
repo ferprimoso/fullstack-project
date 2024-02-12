@@ -1,7 +1,8 @@
 import { Artist } from '@/types'
+import apiKey from '../api'
 
 const getArtists = async (): Promise<Artist[]> => {
-  const res = await fetch('http://fullstack_project_backend_1:3001/artists')
+  const res = await fetch(apiKey + '/artists')
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
