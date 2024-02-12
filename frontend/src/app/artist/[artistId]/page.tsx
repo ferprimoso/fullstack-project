@@ -33,7 +33,7 @@ const ArtistPage = async ({ params }: { params: { artistId: string } }) => {
 
               <div className="flex flex-col gap-y-2 md:mt-0">
                 <p className="hidden md:block font-semibold text-sm">Artist</p>
-                <h1 className="text-white text-4xl sm:text-5xl lg:text-7xl font-bold">
+                <h1 className="text-white text-4xl sm:text-5xl lg:text-7xl font-bold ">
                   {artist.artistName}
                 </h1>
 
