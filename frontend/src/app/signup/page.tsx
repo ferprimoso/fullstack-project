@@ -4,11 +4,25 @@ import { useAuth } from '@/providers/AuthContext'
 import { redirect } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
+// Validation function to check if the email is in a valid format
+const validateEmail = (email: string) => {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+// Validation function to check if the password meets certain criteria (e.g., minimum length)
+const validatePassword = (password: string) => {
+  return password.length >= 6 // Example: Password should be at least 6 characters long
+}
+
 export default function SignupPage() {
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+
+  // Auth Context
   const { user, signup } = useAuth()
 
   // Redirect to home if user is logged in
@@ -20,6 +34,23 @@ export default function SignupPage() {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    // Validate email
+    if (!validateEmail(email)) {
+      setEmailError('Endereço de email invalido')
+      return
+    }
+
+    setEmailError('')
+
+    // Validate password
+    if (!validatePassword(password)) {
+      setPasswordError('Sua senha precisa ter 6 caracteres')
+      return
+    }
+
+    setPasswordError('')
+
     try {
       signup(username, email, password)
     } catch (error) {
@@ -59,6 +90,7 @@ export default function SignupPage() {
               placeholder="email"
               required
             />
+            {emailError && <p className="text-red-500">{emailError}</p>}
           </div>
           <div className="flex flex-col mb-8">
             <label htmlFor="password" className="text-2xl mb-2 textsemibold">
@@ -72,6 +104,7 @@ export default function SignupPage() {
               placeholder="senha"
               required
             />
+            {passwordError && <p className="text-red-500">{passwordError}</p>}
           </div>
           <Button
             className="bg-pink-500 text-white py-4 mb-4 hover:scale-100 hover:opacity-50"

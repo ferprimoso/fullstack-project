@@ -17,6 +17,8 @@ const validatePassword = (password: string) => {
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  // Errors States
   const [emailError, setEmailError] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [loginError, setLoginError] = useState('')
@@ -52,10 +54,9 @@ export default function LoginPage() {
 
     try {
       login(email, password)
-      // redirect('/')
     } catch (error) {
-      console.error('Login error:', error)
       setLoginError('Email ou senha invalidos')
+      console.error('Login error')
     }
   }
 

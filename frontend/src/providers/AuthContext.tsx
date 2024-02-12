@@ -3,7 +3,6 @@
 import { loginUser, signupUser } from '@/actions/user/userAuth'
 import { useRouter } from 'next/navigation'
 import { createContext, useContext, useEffect, useState } from 'react'
-import { useLikedData } from './LikedDataContext'
 
 type User = {
   userId: string
@@ -39,15 +38,11 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
     }
   }, [])
 
-  const login = async (email, password) => {
-    try {
-      const data = await loginUser({ email, password })
-      localStorage.setItem('token', data.token)
-      setUser({ userId: data.userId, username: data.username })
-      router.push('/')
-    } catch (error) {
-      console.log(error)
-    }
+  const login = async (email: string, password: string) => {
+    const data = await loginUser({ email, password })
+    localStorage.setItem('token', data.token)
+    setUser({ userId: data.userId, username: data.username })
+    router.push('/')
   }
 
   const logout = () => {
@@ -57,7 +52,7 @@ export const AuthProvider: React.FC<UserProviderProps> = ({ children }) => {
     router.push('/')
   }
 
-  const signup = async (username, email, password) => {
+  const signup = async (username: string, email: string, password: string) => {
     try {
       await signupUser({ username, email, password })
     } catch (error) {

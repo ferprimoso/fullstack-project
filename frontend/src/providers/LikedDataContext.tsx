@@ -48,6 +48,11 @@ export const LikedDataProvider: React.FC<LikedDataProps> = ({ children }) => {
     try {
       const token = localStorage.getItem('token')
 
+      // If theres no token just return
+      if (!token) {
+        return
+      }
+
       const albumsLiked = await getAllAlbumsLiked(token as string)
       const artistsLiked = await getAllArtistsLiked(token as string)
       setAlbumsLiked(albumsLiked)
