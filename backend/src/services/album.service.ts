@@ -32,6 +32,10 @@ export const albumService = {
           [Op.like]: `%${name}%`,
         },
       },
+      include: [
+        { model: Artist, as: 'artist' },
+        { model: Genre, as: 'genre' },
+      ],
     })
     return resp(200, albums)
   },

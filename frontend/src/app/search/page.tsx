@@ -1,15 +1,20 @@
-import SearchInput from '@/components/SearchInput'
+import SearchInput from './components/SearchInput'
 import Header from '@/components/Header'
-import SearchContent from './components/SearchContent'
 import SideBar from '@/components/SideBar'
+import { searchByAlbumName, searchByArtistName } from '@/actions/search/search'
+import PageContent from '@/components/PageContent'
+import PageContentArtist from '@/components/PageContentArtist'
 
 export const revalidate = 0
 
 interface SearchProps {
-  searchParams: { title: string }
+  searchParams: { name: string }
 }
 
 const Search = async ({ searchParams }: SearchProps) => {
+  const albums = await searchByAlbumName(searchParams.name)
+  const artists = await searchByArtistName(searchParams.name)
+
   return (
     <SideBar>
       <div
@@ -24,11 +29,22 @@ const Search = async ({ searchParams }: SearchProps) => {
       >
         <Header className="from-bg-neutral-900">
           <div className="mb-2 flex flex-col gap-y-6">
-            <h1 className="text-white text-3xl font-semibold">Search</h1>
+            <h1 className="text-white text-3xl font-semibold">Buscar</h1>
             <SearchInput />
           </div>
         </Header>
-        <SearchContent songs={{}} />
+        <div className="mt-2 mb-7 px-6">
+          <div className="flex justify-between items-center">
+            <h1 className="text-white text-2xl font-semibold">Albums</h1>
+          </div>
+          <PageContent items={albums} />
+        </div>
+        <div className="mt-2 mb-7 px-6">
+          <div className="flex justify-between items-center">
+            <h1 className="text-white text-2xl font-semibold">Artists</h1>
+          </div>
+          <PageContentArtist items={artists} />
+        </div>
       </div>
     </SideBar>
   )
