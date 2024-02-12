@@ -1,48 +1,24 @@
 'use client'
 
 /* eslint-disable prettier/prettier */
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { TbPlaylist } from 'react-icons/tb'
-import { getAllAlbumsLiked, getAllArtistsLiked } from '@/actions/liked/getLikeds'
 import { useAuth } from '@/providers/AuthContext'
-import { Album, Artist, Liked } from '@/types'
+import { Album, Artist } from '@/types'
 import MediaItem from './MediaItem'
+import { useLikedData } from '@/providers/LikedDataContext'
 
 const Library = () => {
   // Tabs state logic
   const tabs = ['Artistas', 'Albums']
   const [activeTab, setActiveTab] = useState('Artistas')
 
-  // Data Liked states
-  const [albumsLiked, setAlbumsLiked] = useState<Liked[] | undefined>()
-  const [artistsLiked, setArtistsLiked] = useState<Liked[] | undefined>()
-
-
   // User Context
   const { user } = useAuth()
 
+  // Data Liked Context
+  const { albumsLiked, artistsLiked } = useLikedData()
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const token = localStorage.getItem('token')
-        console.log(token)
-        // Fetch albums and artist Liked when user is logged in
-        const albumsLiked = await getAllAlbumsLiked(token as string)
-        const artistsLiked = await getAllArtistsLiked(token as string)
-        setAlbumsLiked(albumsLiked);
-        setArtistsLiked(artistsLiked);
-      } catch (err) {
-        console.log(err)
-      }
-    };
-    getData();
-  }, []);
-
-
-  // const OnClick = () => {
-  //   // Handle Later
-  // }
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between px-5 pt-4">

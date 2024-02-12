@@ -6,7 +6,7 @@ import PageContent from '@/components/PageContent'
 import Sidebar from '@/components/SideBar'
 import Image from 'next/image'
 
-export const revalidate = 0
+export const revalidate = 40
 
 const ArtistPage = async ({ params }: { params: { artistId: string } }) => {
   const artist = await getArtistById(params.artistId)

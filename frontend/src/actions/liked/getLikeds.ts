@@ -8,7 +8,7 @@ interface createLikedProps {
   token: string | null
 }
 
-const createLiked = async ({
+const createLikedApi = async ({
   token,
   entityType,
   entityId,
@@ -67,4 +67,4 @@ const getAllArtistsLiked = async (token: string): Promise<Liked[]> => {
   return res.json()
 }
 
-export { getAllAlbumsLiked, getAllArtistsLiked, createLiked }
+export { getAllAlbumsLiked, getAllArtistsLiked, createLikedApi }

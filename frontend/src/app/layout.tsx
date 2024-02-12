@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Figtree } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '@/providers/AuthContext'
+import { LikedDataProvider } from '@/providers/LikedDataContext'
 import BottomNavigation from '@/components/BottomNavigation'
 
 const font = Figtree({ subsets: ['latin'] })
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body className={font.className}>
-          {children}
-          <BottomNavigation />
-        </body>
+        <LikedDataProvider>
+          <body className={font.className}>
+            {children}
+            <BottomNavigation />
+          </body>
+        </LikedDataProvider>
       </AuthProvider>
     </html>
   )

@@ -3,6 +3,7 @@
 import { loginUser, signupUser } from '@/actions/user/userAuth'
 import { useRouter } from 'next/navigation'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { useLikedData } from './LikedDataContext'
 
 type User = {
   userId: string
@@ -83,7 +84,6 @@ export const useAuth = () => {
 
 const decodeToken = (token: string) => {
   // Decode the JWT token
-  // This is a placeholder, replace it with your actual token decoding logic
   try {
     const decodedToken = JSON.parse(atob(token.split('.')[1]))
     return decodedToken

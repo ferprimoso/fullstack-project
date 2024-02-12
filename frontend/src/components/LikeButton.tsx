@@ -1,7 +1,7 @@
 'use client'
 
-import { createLiked } from '@/actions/liked/getLikeds'
-import { useState } from 'react'
+import { useLikedData } from '@/providers/LikedDataContext'
+import { useEffect, useState } from 'react'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 
 interface LikeButtonProps {
@@ -11,6 +11,26 @@ interface LikeButtonProps {
 
 const LikeButton: React.FC<LikeButtonProps> = ({ entityId, entityType }) => {
   const [isLiked, setIsLiked] = useState<boolean>(false)
+
+  // Data Liked Context
+  const { albumsLiked, artistsLiked, createLiked } = useLikedData()
+
+  // See if is already Liked
+  useEffect(() => {
+    if (
+      entityType === 'artists' &&
+      artistsLiked?.some((liked) => liked.artistId === entityId)
+    ) {
+      setIsLiked(true)
+    } else if (
+      entityType === 'albums' &&
+      albumsLiked?.some((liked) => liked.albumId === entityId)
+    ) {
+      setIsLiked(true)
+    } else {
+      setIsLiked(false)
+    }
+  }, [albumsLiked, artistsLiked, entityId, entityType])
 
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart
 
@@ -23,8 +43,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ entityId, entityType }) => {
       "
       onClick={() => {
         const token = localStorage.getItem('token')
-        createLiked({ token, entityType, entityId })
-        setIsLiked(!isLiked)
+        createLiked(token as string, entityType, entityId)
       }}
     >
       <Icon color={isLiked ? '#EC4899' : 'white'} size={36} />
