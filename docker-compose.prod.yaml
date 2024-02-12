@@ -27,3 +27,5 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - .db/data-test/mysql:/var/lib/mysql
