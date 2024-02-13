@@ -1,6 +1,8 @@
 FROM node:20.11.0-alpine3.18
 
-WORKDIR /music-api 
+WORKDIR /home/app/backend
+
+ENV PATH /home/app/backend/node_modules/.bin:$PATH
 
 COPY package* .
 

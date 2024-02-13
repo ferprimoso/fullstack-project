@@ -8,6 +8,7 @@
     "lint-fix": "eslint . --ext .ts --fix",
     "build": "tsc",
     "start": "NODE_ENV=production node ./dist/src/server.js",
+    "runprod": "NODE_ENV=production tsc && node ./dist/src/server.js",
     "dev": "nodemon",
     "test": "NODE_ENV=test jest --runInBand",
     "watch-test": "npm run test -- --watchAll",
@@ -15,7 +16,7 @@
     "db-seed": "npx sequelize db:seed:all",
     "db-test-migrate": "NODE_ENV=test npm run db-migrate",
     "db-test-seed": "NODE_ENV=test npm run db-seed",
-    "db-create": "npm run db-migrate && npm run db-test-migrate && npm run db-seed && npm run db-test-seed"
+    "db-create": "tsc && npm run db-migrate && npm run db-test-migrate && npm run db-seed && npm run db-test-seed"
   },
   "keywords": [],
   "author": "",

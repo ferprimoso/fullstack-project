@@ -1,6 +1,8 @@
 FROM node:20.11.0-alpine3.18
 
-WORKDIR /app-frontend 
+WORKDIR /home/app/frontend
+
+ENV PATH /home/app/frontend/node_modules/.bin:$PATH
 
 COPY package* .
 

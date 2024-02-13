@@ -4,8 +4,8 @@ build
 .env
 debug.log
 todo.txt
-.db/data/
-.db/data-test/
+db/data/
+db/data-test/
 
 # testing
 coverage

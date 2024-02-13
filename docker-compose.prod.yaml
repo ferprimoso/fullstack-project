@@ -5,7 +5,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
-    command: sh -c "npm run db-migrate && npm run build && npm run start"
+    command: sh -c "npm run build && npm run db-migrate && npm run start"
     ports:
       - 3001:3001
     environment:

@@ -4,17 +4,20 @@ services:
   frontend:
     build: ./frontend
     command: sh -c "npm run dev"
+    container_name: pc-frontend
     ports:
       - 3000:3000
     volumes:
-      - ./frontend:/app-frontend
+      - ./frontend:/home/app/frontend
     depends_on:
       - backend
     environment:
-      NEXT_PUBLIC_NETWORK_API_URL: http://fullstack_project_backend_1:3001/
+      NEXT_PUBLIC_API_URL: http://localhost:3001/v1
+      NEXT_PUBLIC_NETWORK_API_URL: http://backend:3001/v1
   backend:
     build: ./backend
-    command: sh -c "npm run db-create && npm run dev"
+    command: sh -c "npm run db-migrate && npm run dev"
+    container_name: pc-backend
     ports:
       - 3001:3001
     environment:
@@ -25,7 +28,7 @@ services:
       DB_TEST_HOST: db-test
       JWT_SECRET: s3cres3cret
     volumes:
-      - ./backend:/music-api
+      - ./backend:/home/app/backend
     restart: always
     depends_on:
       - db
@@ -38,13 +41,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
     volumes:
-      - .db/data/mysql:/var/lib/mysql
+      - ./db/data/mysql:/var/lib/mysql
   db-test:
     image: mysql
     container_name: mysql-test-container
     environment:
       MYSQL_ROOT_PASSWORD: password
     volumes:
-      - .db/data-test/mysql:/var/lib/mysql
+      - ./db/data-test/mysql:/var/lib/mysql
     ports:
       - 3307:3306
