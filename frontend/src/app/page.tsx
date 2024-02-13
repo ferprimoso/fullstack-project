@@ -5,7 +5,7 @@ import PageContent from '@/components/PageContent'
 import PageContentArtist from '@/components/PageContentArtist'
 import SideBar from '@/components/SideBar'
 
-export const revalidate = 0
+export const revalidate = 3600
 
 export default async function Home() {
   const albums = await getAlbums()
